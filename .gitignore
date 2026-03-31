@@ -12,11 +12,6 @@ venv/
 .venv/
 env/
 
-# Environment variables (NEVER commit!)
-.env
-.env.*
-!.env.example
-
 # IDE
 .vscode/
 .idea/
@@ -30,6 +25,11 @@ Thumbs.db
 # CrewAI
 .crewai/
 crew_output/
+db/
+
+# Environment (NEVER commit secrets!)
+.env
+.env.*
 
 # Logs
 *.log

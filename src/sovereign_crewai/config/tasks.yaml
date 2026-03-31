@@ -1,0 +1,153 @@
+# ============================================
+# LAYER 1: DEMAND VALIDATION TASKS
+# ============================================
+
+analyze_demand:
+  description: >
+    Analyze current demand validation data from the Sovereign Engine.
+    Review the following baseline data: {total_products} active products, 
+    8 total orders (4 completed), Rp 2,296,000 total revenue, 
+    Rp 574,000 average order value, 6 customers (1 VIP, 1 Gold).
+    
+    Evaluate product-market fit based on real transaction data.
+    Produce a Demand Validation Score (0-100) with evidence-based reasoning.
+  expected_output: >
+    A structured demand validation report containing:
+    demand_score (0-100), verdict (STRONG/GROWING/WEAK/NO DEMAND),
+    evidence list supporting the verdict, 3-5 actionable recommendations,
+    and revenue summary with total, average, and trend analysis.
+  agent: demand_analyst
+
+track_revenue:
+  description: >
+    Analyze revenue data for the Sovereign Business Engine.
+    Current baseline: total revenue Rp 2,296,000 from 8 orders 
+    (4 completed), average order value Rp 574,000.
+    Top customer: Sari Wulandari (VIP, Rp 5,670,000 lifetime).
+    
+    Calculate daily revenue trend, identify top products by revenue,
+    analyze customer spending distribution, and flag any anomalies.
+  expected_output: >
+    Revenue intelligence report with total revenue in IDR,
+    top products ranked by revenue contribution,
+    customer spending segments, growth rate percentage,
+    and any flagged anomalies or concerns.
+  agent: revenue_tracker
+
+# ============================================
+# LAYER 2: SYSTEM/SCALE VALIDATION TASKS
+# ============================================
+
+scout_leads:
+  description: >
+    Execute lead discovery analysis for {target_platform} platform.
+    Current lead pool: 10 leads, 6 hot (score 70+), conversion rate 10%.
+    Target: fashion resellers with 1K-50K followers showing digital gap.
+    Minimum qualifying score: {min_lead_score}.
+    
+    Research potential Instagram fashion reseller profiles,
+    analyze their digital presence, and score them using the 
+    digital gap methodology (High/Medium/Low).
+  expected_output: >
+    Lead discovery report containing: analysis of current lead pool,
+    identification of new lead opportunities, scoring methodology applied,
+    top prospects with reasoning, digital gap distribution analysis,
+    and priority recommendations for the Closer Agent outreach.
+  agent: lead_scout
+
+validate_system:
+  description: >
+    Run system health validation for the Sovereign Engine.
+    Check automation pipeline status: lead scoring, outreach sequences,
+    order processing, and WhatsApp integration readiness.
+    
+    Current metrics: 10 leads tracked, 20% contact rate, 10% conversion rate.
+    Fonnte WhatsApp: pending integration. Outreach logs: 0 sent.
+    
+    Evaluate if the system can scale from 10 to 100 to 1000 leads.
+  expected_output: >
+    System validation report with system_score (0-100),
+    verdict (FULLY OPERATIONAL/PARTIALLY OPERATIONAL/DEGRADED/DOWN),
+    each pipeline health status, conversion funnel metrics,
+    identified bottlenecks, and scaling recommendations.
+  agent: system_validator
+
+compose_outreach:
+  description: >
+    Compose personalized WhatsApp outreach messages for hot leads
+    (score >= 70) for Day {outreach_day} of the outreach sequence.
+    
+    Messages must be in Bahasa Indonesia with casual friendly tone,
+    under 300 characters, include a clear CTA, and feel personal.
+    
+    Use lead data (shop_name, platform, followers, digital_gap)
+    for personalization. Reference the outreach templates knowledge base.
+  expected_output: >
+    Outreach message package containing personalized messages for
+    each hot lead, with lead identification, customized message text
+    in Bahasa Indonesia, personalization notes explaining the approach,
+    and send readiness status for each message.
+  agent: closer_agent
+
+# ============================================
+# LAYER 3: TRUST/AUTHORITY VALIDATION TASKS
+# ============================================
+
+audit_trust:
+  description: >
+    Perform trust validation audit across the 3-brand Instagram ecosystem:
+    1. @fashionkas.official - product engagement and customer trust
+    2. @resellerkas.official - community activity and UGC
+    3. @haidar_faras_m - founder authority and Build in Public content
+    
+    Analyze follower trends, engagement rates, testimonial presence,
+    content consistency, and brand perception across all three accounts.
+  expected_output: >
+    Trust validation report with trust_score (0-100),
+    verdict (HIGH TRUST/BUILDING TRUST/LOW TRUST/NO TRUST),
+    individual brand scores per Instagram account,
+    social proof inventory count, authority indicators found,
+    and specific trust-building action recommendations.
+  agent: trust_auditor
+
+plan_content:
+  description: >
+    Create a 7-day content calendar for all 3 Instagram accounts:
+    
+    @fashionkas.official - product showcases, reviews, sale posts
+    @resellerkas.official - reseller tips, success stories, community
+    @haidar_faras_m - behind-the-scenes, revenue milestones, tech reveals
+    
+    Each post needs caption in Bahasa Indonesia, hashtags, 
+    optimal posting time for Indonesian audience, and visual direction.
+  expected_output: >
+    Complete 7-day content calendar with 1-2 posts per account per day,
+    captions written in Bahasa Indonesia, 10-15 hashtags per post
+    mixing branded and discovery tags, optimized posting times,
+    and content themes aligned with each validation layer goal.
+  agent: content_strategist
+
+# ============================================
+# META TASK: UNIFIED VALIDATION REPORT
+# ============================================
+
+generate_validation_report:
+  description: >
+    Synthesize all agent outputs into a unified Sovereign Validation Report.
+    
+    Collect demand_score, system_score, trust_score from respective agents.
+    Calculate overall validation score weighted: Demand 40%, System 30%, Trust 30%.
+    
+    Determine verdict: Score >= 80 MARKET VALIDATED, >= 60 PROGRESSING,
+    >= 40 EARLY STAGE, below 40 NOT VALIDATED.
+    
+    Include cross-layer insights, risk factors, and top 5 priority actions.
+    This is the final executive summary for the Founder.
+  expected_output: >
+    Sovereign Validation Report containing:
+    overall validation_score (0-100), market validation verdict,
+    individual layer scores with verdicts for demand system and trust,
+    cross-layer pattern insights, top 3 risk factors identified,
+    top 5 recommended priority actions, total data points analyzed,
+    generation timestamp, and engine version 3.0.
+  agent: sovereign_orchestrator
