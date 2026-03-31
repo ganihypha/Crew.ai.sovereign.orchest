@@ -1,0 +1,18 @@
+[project]
+name = "sovereign-crewai"
+version = "3.0.0"
+description = "CrewAI Autonomous Agents for the Sovereign Business Engine - 3-Layer Market Validation System"
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "crewai>=0.86.0",
+    "crewai-tools>=0.17.0",
+    "langchain-openai>=0.3.0",
+    "langchain-community>=0.3.0",
+    "requests>=2.31.0",
+    "pydantic>=2.0.0",
+    "python-dotenv>=1.0.0",
+    "rich>=13.0.0",
+]
+
+[project.scripts]
+sovereign = "main:main"
