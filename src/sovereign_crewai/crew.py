@@ -2,15 +2,51 @@
 Sovereign Business Engine - CrewAI Crew Definition
 ====================================================
 8 specialized agents across 3 validation layers.
-Uses Groq (Llama) as LLM provider for fast, free inference.
+Uses Groq (Llama 3.3 70B) as LLM provider for fast inference.
+
+IMPORTANT for CrewAI AMP deployment:
+- Tools are lazily initialized to prevent import-time crashes
+- All tool API keys must be set as AMP environment variables
+- SERPER_API_KEY is required for SerperDevTool
+- GROQ_API_KEY is required for Groq LLM
 """
 
 import os
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
-from crewai_tools import SerperDevTool, ScrapeWebsiteTool
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from typing import List
+
+
+def get_search_tool():
+    """Lazily initialize SerperDevTool only when SERPER_API_KEY is available."""
+    serper_key = os.environ.get('SERPER_API_KEY', '')
+    if serper_key:
+        try:
+            from crewai_tools import SerperDevTool
+            return SerperDevTool()
+        except Exception:
+            pass
+    return None
+
+
+def get_scrape_tool():
+    """Lazily initialize ScrapeWebsiteTool with error handling."""
+    try:
+        from crewai_tools import ScrapeWebsiteTool
+        return ScrapeWebsiteTool()
+    except Exception:
+        return None
+
+
+def _build_tools(*tool_fns):
+    """Build a list of tools, filtering out None values."""
+    tools = []
+    for fn in tool_fns:
+        tool = fn()
+        if tool is not None:
+            tools.append(tool)
+    return tools
 
 
 @CrewBase
@@ -36,7 +72,7 @@ class SovereignCrew():
     def demand_analyst(self) -> Agent:
         return Agent(
             config=self.agents_config['demand_analyst'],  # type: ignore[index]
-            tools=[SerperDevTool()],
+            tools=_build_tools(get_search_tool),
             verbose=True
         )
 
@@ -55,7 +91,7 @@ class SovereignCrew():
     def lead_scout(self) -> Agent:
         return Agent(
             config=self.agents_config['lead_scout'],  # type: ignore[index]
-            tools=[ScrapeWebsiteTool(), SerperDevTool()],
+            tools=_build_tools(get_scrape_tool, get_search_tool),
             verbose=True,
             allow_delegation=True
         )
@@ -82,7 +118,7 @@ class SovereignCrew():
     def trust_auditor(self) -> Agent:
         return Agent(
             config=self.agents_config['trust_auditor'],  # type: ignore[index]
-            tools=[SerperDevTool(), ScrapeWebsiteTool()],
+            tools=_build_tools(get_search_tool, get_scrape_tool),
             verbose=True
         )
 
@@ -90,7 +126,7 @@ class SovereignCrew():
     def content_strategist(self) -> Agent:
         return Agent(
             config=self.agents_config['content_strategist'],  # type: ignore[index]
-            tools=[SerperDevTool()],
+            tools=_build_tools(get_search_tool),
             verbose=True
         )
 
