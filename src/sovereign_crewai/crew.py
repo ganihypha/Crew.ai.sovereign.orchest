@@ -2,13 +2,13 @@
 Sovereign Business Engine - CrewAI Crew Definition
 ====================================================
 8 specialized agents across 3 validation layers.
-Uses Groq (Llama 3.3 70B) as LLM provider for fast inference.
+Uses Groq (Llama 3.3 70B) as LLM provider via LiteLLM.
 
 IMPORTANT for CrewAI AMP deployment:
-- Tools are lazily initialized to prevent import-time crashes
-- All tool API keys must be set as AMP environment variables
-- SERPER_API_KEY is required for SerperDevTool
-- GROQ_API_KEY is required for Groq LLM
+- crewai-tools must be explicitly in pyproject.toml dependencies
+- crewai[litellm] is required for Groq LLM support
+- GROQ_API_KEY must be set as AMP environment variable
+- SERPER_API_KEY is optional (for web search tools)
 """
 
 import os
@@ -17,23 +17,33 @@ from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from typing import List
 
+# Import tools at module level - they're now guaranteed to be installed
+# via pyproject.toml dependency on crewai-tools
+try:
+    from crewai_tools import SerperDevTool, ScrapeWebsiteTool
+    TOOLS_AVAILABLE = True
+except ImportError:
+    TOOLS_AVAILABLE = False
+
 
 def get_search_tool():
-    """Lazily initialize SerperDevTool only when SERPER_API_KEY is available."""
+    """Initialize SerperDevTool only when SERPER_API_KEY is available."""
+    if not TOOLS_AVAILABLE:
+        return None
     serper_key = os.environ.get('SERPER_API_KEY', '')
-    if serper_key:
-        try:
-            from crewai_tools import SerperDevTool
-            return SerperDevTool()
-        except Exception:
-            pass
-    return None
+    if not serper_key:
+        return None
+    try:
+        return SerperDevTool()
+    except Exception:
+        return None
 
 
 def get_scrape_tool():
-    """Lazily initialize ScrapeWebsiteTool with error handling."""
+    """Initialize ScrapeWebsiteTool with error handling."""
+    if not TOOLS_AVAILABLE:
+        return None
     try:
-        from crewai_tools import ScrapeWebsiteTool
         return ScrapeWebsiteTool()
     except Exception:
         return None
@@ -43,9 +53,12 @@ def _build_tools(*tool_fns):
     """Build a list of tools, filtering out None values."""
     tools = []
     for fn in tool_fns:
-        tool = fn()
-        if tool is not None:
-            tools.append(tool)
+        try:
+            tool = fn()
+            if tool is not None:
+                tools.append(tool)
+        except Exception:
+            continue
     return tools
 
 

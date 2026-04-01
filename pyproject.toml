@@ -1,11 +1,11 @@
 [project]
 name = "sovereign-crewai"
-version = "3.1.0"
+version = "3.2.0"
 description = "Sovereign Business Engine - 8 Autonomous AI Agents for 3-Layer Market Validation"
 requires-python = ">=3.10,<3.14"
 dependencies = [
-    "crewai[tools]>=0.102.0",
-    "langchain-groq>=0.3.0",
+    "crewai[tools,litellm]>=1.12.0,<2.0.0",
+    "crewai-tools>=1.12.0,<2.0.0",
 ]
 
 [project.scripts]

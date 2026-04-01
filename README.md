@@ -6,8 +6,36 @@
 ## Quick Deploy to CrewAI AMP
 
 1. Connect this repo at [app.crewai.com](https://app.crewai.com)
-2. Set environment variable: `GROQ_API_KEY`
+2. Set environment variables:
+   - `GROQ_API_KEY` (required) - from [Groq Console](https://console.groq.com)
+   - `SERPER_API_KEY` (optional) - for web search tools
 3. Click Deploy
+
+## What Was Fixed (v3.2.0)
+
+### Root Cause Analysis
+The deployment was failing with `CrashLoopBackOff` (exit code 10) due to:
+
+1. **Missing `crewai-tools` dependency**: `crewai[tools]` extras did NOT auto-install `crewai-tools` package in CrewAI AMP's `uv` environment. The `from crewai_tools import SerperDevTool` import in `crew.py` would crash during AMP's "Testing automation..." phase.
+
+2. **Missing `litellm` dependency**: CrewAI 1.12.2 requires `litellm` for non-native LLM providers (like Groq). Without it, agent initialization fails with `ImportError: model did not match any supported native provider`.
+
+3. **Unnecessary `langchain-groq`**: Was listed as dependency but not used - CrewAI routes Groq through LiteLLM, not LangChain.
+
+### Fix Applied
+```toml
+# BEFORE (broken)
+dependencies = [
+    "crewai[tools]>=0.102.0",
+    "langchain-groq>=0.3.0",
+]
+
+# AFTER (fixed)
+dependencies = [
+    "crewai[tools,litellm]>=1.12.0,<2.0.0",
+    "crewai-tools>=1.12.0,<2.0.0",
+]
+```
 
 ## Architecture
 
@@ -42,8 +70,33 @@ CrewAI AMP (This Repo)          Sovereign Web (Dashboard)
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `GROQ_API_KEY` | Yes | Groq Console API key |
+| `GROQ_API_KEY` | **Yes** | Groq Console API key |
 | `SERPER_API_KEY` | Optional | Web search capability |
+
+## Project Structure (CrewAI AMP Compatible)
+
+```
+sovereign-crewai/
+├── pyproject.toml                        # [tool.crewai] type = "crew"
+├── uv.lock                              # Required for AMP deployment
+├── src/
+│   └── sovereign_crewai/
+│       ├── __init__.py
+│       ├── main.py                      # Entry point: run()
+│       ├── crew.py                      # @CrewBase class
+│       ├── config/
+│       │   ├── agents.yaml              # 8 agent definitions
+│       │   └── tasks.yaml               # 8 task definitions
+│       ├── knowledge/                   # AI Knowledge Base
+│       │   ├── sovereign_engine_overview.md
+│       │   ├── demand_validation_sop.md
+│       │   ├── system_validation_sop.md
+│       │   ├── trust_validation_sop.md
+│       │   └── outreach_templates.md
+│       └── tools/
+│           └── __init__.py
+└── README.md
+```
 
 ## URLs
 

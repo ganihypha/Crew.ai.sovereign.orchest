@@ -6,13 +6,13 @@ Entry point for CrewAI AMP deployment.
 Uses run() function as required by CrewAI AMP for Crew-type projects.
 
 Environment Variables Required in CrewAI AMP:
-- GROQ_API_KEY: Groq API key for LLM inference
+- GROQ_API_KEY: Groq API key for LLM inference (via LiteLLM)
 - SERPER_API_KEY: Serper.dev API key for web search (optional)
-- OPENAI_API_KEY: Set to "NA" to suppress LiteLLM fallback errors
 """
 
 import os
-# Suppress OpenAI fallback - we use Groq
+
+# Suppress OpenAI fallback warning - we use Groq via LiteLLM
 if not os.environ.get('OPENAI_API_KEY'):
     os.environ['OPENAI_API_KEY'] = 'NA'
 
