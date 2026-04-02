@@ -1,7 +1,8 @@
 # SOVEREIGN BUSINESS ENGINE
-# CURRENT STATE DOCUMENT
+# CURRENT STATE DOCUMENT — UPDATED
 ### Classification: CONFIDENTIAL | Founder Access Only
-### Generated: 2026-04-01 | Version: 3.2 → v4.0 Transition
+### Generated: 2026-04-02 | Version: v3.2 LIVE → v6.0 ROADMAP READY
+### All 8 Session Handoffs Created ✅
 
 ---
 
@@ -14,7 +15,8 @@
 
 Project ini adalah **private AI-powered business orchestration platform** untuk validasi market dan otomasi bisnis fashion. Menggunakan 3 Instagram brand sebagai laboratorium validasi demand.
 
-**STATUS SAAT INI**: Engine v3.2 **LIVE** di production. Transisi ke v4.0 sedang direncanakan.
+**STATUS SAAT INI**: Engine v3.2 **LIVE** di production.  
+**DOKUMENTASI**: 8 Session Handoff files sudah dibuat — siap untuk eksekusi v4.0→v6.0.
 
 ---
 
@@ -31,7 +33,7 @@ Project ini adalah **private AI-powered business orchestration platform** untuk 
 
 ---
 
-## 🏗️ TECH STACK SAAT INI
+## 🏗️ TECH STACK SAAT INI (v3.2)
 
 | Layer | Technology | Status |
 |-------|-----------|--------|
@@ -42,7 +44,7 @@ Project ini adalah **private AI-powered business orchestration platform** untuk 
 | **Auth** | Custom JWT (PIN 1945 + Web Crypto) | ✅ LIVE |
 | **Edge AI** | LangGraph.js (Cloudflare Workers) | ✅ INTEGRATED |
 | **Analysis AI** | CrewAI AMP (via REST) | ✅ ONLINE |
-| **WhatsApp** | Fonnte API | ❌ TOKEN MISSING |
+| **WhatsApp** | Fonnte API | ❌ TOKEN MISSING → S006 |
 | **IG Scraping** | ScraperAPI | ✅ KEY CONFIGURED |
 | **Web Research** | SerpAPI | ✅ KEY CONFIGURED |
 | **LLM** | Groq (llama-3.3-70b) + OpenAI planned | ✅ GROQ CONFIGURED |
@@ -51,352 +53,269 @@ Project ini adalah **private AI-powered business orchestration platform** untuk 
 
 ---
 
-## 📊 DATA SAAT INI DI SUPABASE
+## 📊 DATA SAAT INI DI SUPABASE (v3.2)
 
 | Table | Status | Records | Notes |
 |-------|--------|---------|-------|
 | products | ✅ LIVE | 8 | 8 SKU aktif |
-| customers | ✅ LIVE | 6 | Tier system: Bronze/Silver/Gold/VIP |
-| orders | ✅ LIVE | 8 | Total Revenue ~Rp 2,296,000 |
+| customers | ✅ LIVE | 6 | Tier: Bronze/Silver/Gold/VIP |
+| orders | ✅ LIVE | 8 | Revenue ~Rp 2,296,000 |
 | leads | ✅ LIVE | 10 | 6 Hot, 2 Warm, 2 Cold |
 | outreach_campaigns | ✅ LIVE | 0 | Table ada, belum ada data |
 | outreach_logs | ✅ LIVE | 0 | Table ada, belum ada data |
 | validation_events | ✅ LIVE | 11 | Market validation events |
 | validation_metrics | ✅ LIVE | 15 | Quantitative data |
-| wa_logs | ❌ PLANNED | - | Belum dibuat |
-| ai_tasks | ❌ PLANNED | - | Belum dibuat |
-| ai_insights | ❌ PLANNED | - | Belum dibuat |
-| order_items | ❌ PLANNED | - | Belum dibuat |
-| embeddings | ❌ v4.0 | - | Butuh pgvector extension |
-| agent_memory | ❌ v4.0 | - | Short-term context cache |
-| agent_handoffs | ❌ v4.0 | - | Inter-framework message bus |
-| pricing_history | ❌ v4.0 | - | AI pricing decisions log |
+| wa_logs | ❌ PLANNED S001 | - | Dibuat di Session #001 |
+| ai_tasks | ❌ PLANNED S001 | - | Dibuat di Session #001 |
+| ai_insights | ❌ PLANNED S001 | - | Dibuat di Session #001 |
+| order_items | ❌ PLANNED S001 | - | Dibuat di Session #001 |
+| embeddings | ❌ PLANNED S002 | - | Butuh pgvector, S002 |
+| agent_memory | ❌ PLANNED S002 | - | Short-term context cache |
+| content_calendar | ❌ PLANNED S008 | - | Dibuat di Session #008 |
+| analytics_metrics | ❌ PLANNED S008 | - | Dibuat di Session #008 |
 
 ---
 
 ## 🤖 AI AGENTS SAAT INI (v3.2)
 
 ### LangGraph.js Edge Agents (Cloudflare Workers) — 4 Agents
-| Agent | Status | Capability | Gap |
-|-------|--------|-----------|-----|
-| ScoutScorer | ✅ LIVE | Lead scoring | No memory; re-scores known leads |
-| MessageComposer | ✅ LIVE | WA msg compose | Context-blind; generic templates |
-| InsightGenerator | ✅ LIVE | Business insights | Single-source; no cross-table analysis |
-| AnomalyDetector | ✅ LIVE | Metric anomaly | Reactive only; no predictive |
+| Agent | Status | Capability | Upgrade Target |
+|-------|--------|-----------|----------------|
+| ScoutScorer | ✅ LIVE | Lead scoring + enrichment | RAG memory (S003) |
+| MessageComposer | ✅ LIVE | WA message generation | V2 with RAG (S003) |
+| InsightGenerator | ✅ LIVE | AI insights generation | Daily briefing (S007) |
+| AnomalyDetector | ✅ LIVE | Anomaly detection | Enhanced (S007) |
 
-### CrewAI AMP Agents — 8 Agents (via AMP API)
-| Agent | Status | Role |
-|-------|--------|------|
-| demand_analyst | ✅ LIVE | Analyze demand/Layer 1 |
-| revenue_tracker | ✅ LIVE | Revenue tracking & forecasting |
-| lead_scout | ✅ LIVE | Deep lead research |
-| system_validator | ✅ LIVE | Layer 2 scale validation |
-| closer_agent | ✅ LIVE | Outreach planning |
-| trust_auditor | ✅ LIVE | Layer 3 trust analysis |
-| content_strategist | ✅ LIVE | IG content planning |
-| sovereign_orchestrator | ✅ LIVE | Master orchestration |
-
-**Total v3.2 Agents: 12** (4 LangGraph + 8 CrewAI)
+### CrewAI AMP Agents — 8 Agents (4 Live + 4 Planned)
+| Agent | Status | Session |
+|-------|--------|---------|
+| MarketValidationCrew | ✅ LIVE | Current |
+| LeadResearchCrew | ✅ LIVE | Current |
+| RevenueAnalysisCrew | ✅ LIVE | Current |
+| ContentStrategyCrew | ✅ LIVE | Current |
+| ChurnDetector | ❌ PLANNED | Session #004 |
+| UpsellAdvisor | ❌ PLANNED | Session #004 |
+| EngagementAnalyzer | ❌ PLANNED | Session #004 |
+| CompetitorIntelAgent | ❌ PLANNED | Session #004 |
 
 ---
 
-## 📡 API ROUTES SAAT INI
+## 📋 SESSION HANDOFFS — COMPLETE INVENTORY
 
-### Auth & Core
-```
-GET  /api/health          ✅ LIVE  - System health + version (v3.2)
-POST /api/auth/login      ✅ LIVE  - PIN auth → JWT
-GET  /api/auth/verify     ✅ LIVE  - JWT verification
-```
+Semua 9 session handoff files sudah dibuat di `/handoffs/`:
+
+| File | Content | Status |
+|------|---------|--------|
+| S000_PRE_SESSION_PRIMER.md | Setup & context | ✅ CREATED |
+| S001_HANDOFF_TO_S002.md | Foundation DB + Fonnte routes | ✅ CREATED |
+| S002_HANDOFF_TO_S003.md | pgvector + RAG tables | ✅ CREATED |
+| S003_HANDOFF_TO_S004.md | LangGraph v2 + RAG memory | ✅ CREATED |
+| S004_HANDOFF_TO_S005.md | CrewAI v4.0 (4 new agents) | ✅ CREATED |
+| S005_HANDOFF_TO_S006.md | AI Intelligence UI page | ✅ CREATED |
+| S006_HANDOFF_TO_S007.md | Fonnte Live + auto-sequence | ✅ CREATED |
+| S007_HANDOFF_TO_S008.md | Real-money dashboard | ✅ CREATED |
+| S008_FINAL.md | Polish + security + final deploy | ✅ CREATED |
+
+---
+
+## 🔌 API ROUTE MAP (v3.2 CURRENT)
+
+### Auth
+- `POST /api/auth/login` — PIN login → JWT
+- `POST /api/auth/verify` — verify token
 
 ### Dashboard
-```
-GET  /api/dashboard/stats     ✅ LIVE  - Revenue, orders, leads KPIs
-GET  /api/dashboard/activity  ✅ LIVE  - Recent activity feed
-GET  /api/dashboard/ai-insights  🔶 PARTIAL  - Returns empty (no ai_insights table)
-```
+- `GET /api/dashboard` — basic metrics (NEEDS UPGRADE → S007)
 
-### Scout Agent
-```
-GET    /api/scout/leads      ✅ LIVE  - List leads with filters
-POST   /api/scout/leads      ✅ LIVE  - Manual lead entry
-PUT    /api/scout/leads/:id  ✅ LIVE  - Update lead
-DELETE /api/scout/leads/:id  ✅ LIVE  - Delete lead
-POST   /api/scout/score      ✅ LIVE  - Algorithm scoring
-POST   /api/scout/gather     🔶 LIVE  - ScraperAPI (key configured, needs testing)
-POST   /api/scout/ai-score   ✅ LIVE  - LangGraph ScoutScorer
-POST   /api/scout/enrich     ✅ LIVE  - AI lead enrichment
-```
+### Scout (Lead Discovery)
+- `GET /api/scout/leads` — list leads
+- `POST /api/scout/gather` — ScraperAPI scrape
+- `POST /api/scout/score` — AI scoring
+- `GET /api/scout/enrichment` — data enrichment
 
-### Closer Agent
-```
-GET  /api/closer/campaigns  ✅ LIVE  - List campaigns
-POST /api/closer/campaigns  ✅ LIVE  - Create campaign
-GET  /api/closer/templates  ✅ LIVE  - Message templates
-POST /api/closer/send       🔶 PARTIAL  - Route exists (Fonnte token missing)
-GET  /api/closer/logs       ✅ LIVE  - Outreach logs
-POST /api/closer/ai-compose ✅ LIVE  - LangGraph MessageComposer
-POST /api/closer/sequence   ✅ LIVE  - Auto-sequence trigger
-```
+### Closer (WhatsApp Outreach)
+- `GET /api/closer/campaigns` — list campaigns
+- `GET /api/closer/templates` — message templates
+- `POST /api/closer/send` — send message (MOCK → live in S006)
+- `POST /api/closer/ai-compose` — AI message generation
 
-### WhatsApp (Fonnte)
-```
-POST /api/wa/send       🔴 NO TOKEN  - Route built, Fonnte token missing
-POST /api/wa/broadcast  🔴 NO TOKEN  - Route built, Fonnte token missing
-GET  /api/wa/status     🔴 NO TOKEN  - Device status check
-POST /api/wa/webhook    ✅ LIVE      - Incoming webhook receiver
-```
-
-### Products / Orders / Customers
-```
-GET/POST   /api/products/:id   ✅ LIVE  - Full CRUD
-GET/POST   /api/orders/:id     ✅ LIVE  - Full CRUD
-GET/POST   /api/customers/:id  ✅ LIVE  - Full CRUD
-```
-
-### AI Intelligence
-```
-GET  /api/ai/status          ✅ LIVE  - AMP: ONLINE, 8 agents, 8 tasks
-GET  /api/ai/inputs          ✅ LIVE  - AMP inputs schema
-GET  /api/ai/insights        ✅ LIVE  - AI insights (0 records, table pending)
-GET  /api/ai/tasks           ✅ LIVE  - AI task queue
-POST /api/ai/crew/kickoff    ✅ LIVE  - Kick off CrewAI crew via AMP
-GET  /api/ai/crew/status/:id ✅ LIVE  - Poll task status
-POST /api/ai/webhook         ✅ LIVE  - CrewAI → Hono callback
-```
+### WhatsApp Bridge
+- `POST /api/wa/send` — send WA (MOCK → live in S006)
+- `POST /api/wa/bulk` — bulk send
+- `GET /api/wa/status` — device status
+- `GET /api/wa/history` — message logs
 
 ### Validation
-```
-GET  /api/validation/stats    ✅ LIVE  - 3-layer dashboard
-GET  /api/validation/events   ✅ LIVE  - Validation events (11 records)
-POST /api/validation/events   ✅ LIVE  - Log new event
-GET  /api/validation/metrics  ✅ LIVE  - Metrics (15 records)
-GET  /api/validation/report   ✅ LIVE  - Full validation report
-```
+- `GET /api/validation/stats` — validation statistics
+- `GET /api/validation/events` — events list
+- `GET /api/validation/metrics` — metrics data
+- `GET /api/validation/report` — full report
 
-### Reports & Catalog
-```
-GET /api/reports/revenue   ✅ LIVE
-GET /api/reports/products  ✅ LIVE
-GET /api/reports/leads     ✅ LIVE
-GET /catalog               ✅ LIVE  - Public catalog (all products)
-GET /catalog/:slug         ✅ LIVE  - Product catalog page
-```
+### AI & CrewAI
+- `GET /api/ai/status` — AI system status
+- `GET /api/ai/insights` — saved insights
+- `POST /api/ai/crew/kickoff` — trigger CrewAI
+- `GET /api/ai/crew/status/:id` — crew status
+- `GET /api/ai/crew/result/:id` — crew result
 
----
+### Reports
+- `GET /api/reports/revenue` — revenue report
+- `GET /api/reports/products` — product analytics
+- `GET /api/reports/leads` — lead funnel report
 
-## 🔐 CREDENTIALS INVENTORY
-
-| Service | Key/Token | Status | Stored In |
-|---------|----------|--------|-----------|
-| Supabase URL | https://lfohzibcsafqthupcvdg.supabase.co | ✅ | CF Secrets + .dev.vars |
-| Supabase Anon Key | eyJhbGci... (anon, 2090 expiry) | ✅ | CF Secrets + .dev.vars |
-| Supabase Service Key | eyJhbGci... (service_role) | ✅ | CF Secrets + .dev.vars |
-| JWT Secret | cCZ/O5wh... (base64) | ✅ | CF Secrets + .dev.vars |
-| Master PIN | 1945 | ✅ | CF Secrets + .dev.vars |
-| ScraperAPI Key | abbea259... | ✅ | CF Secrets + .dev.vars |
-| LangChain API Key | lsv2_pt_da3bf55d... | ✅ | .dev.vars (rotate recommended) |
-| LangChain Service Key | lsv2_sk_3f0ef8c1... | ✅ | .dev.vars (rotate recommended) |
-| CrewAI Org ID | 9878e40e-ad44-45e2-8d29-da0b3ee92511 | ✅ | .dev.vars |
-| CrewAI PAT | pat_CYsjTjGRvR37C0j... | ✅ | .dev.vars |
-| CrewAI Enterprise Token | PK_682a18e31a162a... | ✅ | .dev.vars |
-| CrewAI AMP URL | https://crew-ai-sovereign-orchest-ef50eb91-6c9d-4fc-f916c3e6.crewai.com | ✅ | CF Secrets + .dev.vars |
-| CrewAI AMP Token | <CREWAI_AMP_TOKEN> | ✅ | CF Secrets |
-| SerpAPI Key | 7fabcda253... | ✅ | .dev.vars |
-| Groq API Key | gsk_yF6Apx... | ✅ | .dev.vars |
-| Cloudflare Account ID | 618d52f63c689422eacf6638436c3e8b | ✅ | ~/.bashrc |
-| CF API Token | yvImquSdjXBL... | ✅ | ~/.bashrc |
-| GitHub Token | ghp_GrnKphS5efTs... | ✅ | git remote URL |
-| **Fonnte Token** | **NOT PROVIDED** | ❌ MISSING | Need from fonnte.com |
-| **OpenAI API Key** | **NOT PROVIDED** | ❌ MISSING | Need for v4.0 RAG |
+### Catalog / Products / Orders / Customers (CRUD)
+- Standard REST CRUD for all
 
 ---
 
-## 📁 PROJECT STRUCTURE SAAT INI
+## 💰 BUSINESS METRICS (Current)
 
 ```
-/home/user/webapp/                     # Main Sovereign Engine
-├── src/
-│   ├── index.tsx                      # Main Hono app (v3.2)
-│   └── routes/
-│       ├── auth.ts                    # PIN + JWT auth
-│       ├── dashboard.ts               # Stats + activity
-│       ├── scout.ts                   # Scout agent routes
-│       ├── closer.ts                  # Closer agent routes
-│       ├── wa.ts                      # Fonnte WhatsApp routes
-│       ├── products.ts                # Products CRUD
-│       ├── orders.ts                  # Orders CRUD
-│       ├── customers.ts               # Customers CRUD
-│       ├── reports.ts                 # Analytics reports
-│       ├── validation.ts              # Market validation
-│       ├── crewai.ts                  # CrewAI AMP integration
-│       └── catalog.ts                 # Public catalog
-├── public/                            # Static assets
-├── docs/
-│   ├── 01-PRD.md                      # Product Requirements
-│   ├── 02-ARCHITECTURE.md             # Technical Architecture
-│   ├── 03-DESIGN.md                   # UI/UX Design System
-│   └── 04-TODO-ROADMAP.md             # Development Roadmap
-├── dist/                              # Built output (Cloudflare Workers)
-├── .dev.vars                          # Local secrets (git-ignored)
-├── wrangler.jsonc                     # CF config
-├── vite.config.ts                     # Build config
-├── ecosystem.config.cjs               # PM2 config
-├── package.json                       # Dependencies
-└── README.md                          # Documentation
+Revenue: Rp 2,296,000
+Orders: 8 (all paid)
+Customers: 6
+Leads: 10 (6 Hot, 2 Warm, 2 Cold)
+Conversion Rate: 10% (1/10 leads → validated)
+Market Validation Score: 100/100
+AOV: ~Rp 287,000
+```
 
-/home/user/crewai-sovereign/           # CrewAI Python Project
-├── src/sovereign_crew/
-│   ├── __init__.py
-│   └── crew.py                        # SovereignValidationCrew class
-├── config/
-│   ├── agents.yaml                    # Agent definitions
-│   └── tasks.yaml                     # Task definitions
-├── knowledge/
-│   ├── sovereign_engine_overview.md   # KB: Engine overview
-│   ├── demand_validation_sop.md       # KB: Layer 1 SOP
-│   ├── system_validation_sop.md       # KB: Layer 2 SOP
-│   ├── trust_validation_sop.md        # KB: Layer 3 SOP
-│   └── outreach_templates.md          # KB: WA templates
-├── tools/
-│   ├── __init__.py
-│   ├── supabase_tool.py               # DB query tool
-│   ├── fonnte_tool.py                 # WA sending tool
-│   └── sovereign_api_tool.py          # API connector tool
-├── main.py                            # Entry point
-└── requirements.txt                   # Python deps
+### Three-Layer Business Architecture
+```
+Layer 1 — Brand Machine (@fashionkas.official)
+  IG → ScraperAPI → leads → AI scoring → outreach
+  Status: PARTIAL (ScraperAPI configured, Fonnte missing)
+
+Layer 2 — Growth Engine (@resellerkas.official)  
+  Leads → Closer Agent → Fonnte WA → conversion tracking
+  Status: PLANNED (Fonnte token needed)
+
+Layer 3 — Founder Engine (@haidar_faras_m)
+  Validation metrics → AI insights → content creation
+  Status: LIVE (validation dashboard active)
 ```
 
 ---
 
-## 📈 BUSINESS METRICS SAAT INI
+## 🔑 CREDENTIAL INVENTORY
 
-| Metric | Value | Source |
-|--------|-------|--------|
-| Total Revenue | Rp 2,296,000 | orders table |
-| Orders | 8 (completed + pending) | orders table |
-| Total Leads | 10 | leads table |
-| Hot Leads (score 80+) | 6 | leads table |
-| Warm Leads (score 60-79) | 2 | leads table |
-| Cold Leads (score <60) | 2 | leads table |
-| Customers | 6 | customers table |
-| Products (SKU) | 8 | products table |
-| Validation Score | 100 (MARKET VALIDATED) | validation_metrics |
-| Validation Events | 11 | validation_events table |
+> ⚠️ **ROTASI SEGERA** keys yang pernah terekspose:
+> LANGCHAIN_API_KEY, LANGCHAIN_SERVICE_KEY, CREWAI_PAT, CREWAI_ENTERPRISE_TOKEN, SERPAPI_KEY, GitHub PAT
 
-### 3-Layer Engine Status
-| Layer | Brand | Status | Signal |
-|-------|-------|--------|--------|
-| Demand | @fashionkas.official | ✅ ACTIVE | GROWING |
-| System | @resellerkas.official | ✅ ACTIVE | WORKING |
-| Trust | @haidar_faras_m | ✅ ACTIVE | BUILDING |
-
----
-
-## 🎯 VERSI HISTORY
-
-| Version | Tanggal | Status | Highlight |
-|---------|---------|--------|-----------|
-| v1.0 | 2026-03-28 | DONE | Initial PRD + Architecture |
-| v2.0 | 2026-03-31 | DONE | Full CRUD + Validation Intelligence + Glassmorphism UI |
-| v3.0 | 2026-03-31 | DONE | AI Agent Architecture + CrewAI + LangGraph.js |
-| v3.2 | 2026-04-01 | **LIVE NOW** | CrewAI AMP Online, 53 modules, version bump |
-| **v4.0** | TBD | **PLANNING** | 21 agents + RAG + pgvector + cross-framework |
+| Credential | Status | Notes |
+|-----------|--------|-------|
+| SUPABASE_URL | ✅ Set | lfohzibcsafqthupcvdg.supabase.co |
+| SUPABASE_ANON_KEY | ✅ Set | In .dev.vars + CF Secrets |
+| SUPABASE_SERVICE_KEY | ✅ Set | In .dev.vars + CF Secrets |
+| JWT_SECRET | ✅ Set | In .dev.vars + CF Secrets |
+| MASTER_PIN | ✅ Set | 1945 |
+| SCRAPER_API_KEY | ✅ Set | In .dev.vars |
+| LANGCHAIN_API_KEY | ⚠️ ROTATE | Was exposed, replace |
+| LANGCHAIN_SERVICE_KEY | ⚠️ ROTATE | Was exposed, replace |
+| CREWAI_ORG_ID | ✅ Set | 9878e40e-ad44-45e2-8d29-da0b3ee92511 |
+| CREWAI_PAT | ⚠️ ROTATE | Was exposed, replace |
+| CREWAI_ENTERPRISE_TOKEN | ⚠️ ROTATE | Was exposed, replace |
+| CREWAI_AMP_URL | ✅ Set | crew-ai-sovereign-orchest-*.crewai.com |
+| CREWAI_AMP_TOKEN | ✅ Set | In .dev.vars + CF Secrets |
+| SERPAPI_KEY | ⚠️ ROTATE | Was exposed, replace |
+| GROQ_API_KEY | ✅ Set | In .dev.vars |
+| FONNTE_TOKEN | ❌ MISSING | Must obtain from fonnte.com |
+| OPENAI_API_KEY | ❌ MISSING | Must obtain from openai.com |
 
 ---
 
-## ❌ WHAT'S MISSING (Gap Analysis v3.2 → v4.0)
+## 🚨 GAP ANALYSIS (v3.2 → v6.0)
 
-### BLOCKER (Tidak bisa lanjut tanpa ini)
-| # | Item | Effort | Priority |
-|---|------|--------|----------|
-| B1 | **Fonnte API Token** | 5 min (register fonnte.com) | 🔴 P0 |
-| B2 | **OpenAI API Key** | 5 min (platform.openai.com) | 🔴 P0 for RAG |
+### Critical Gaps (Blocking Features)
+1. **Fonnte Token** — WhatsApp automation completely blocked
+2. **OpenAI API Key** — LangGraph v2 agents not functional
+3. **pgvector Extension** — RAG memory not possible
 
-### FASE 1 — Foundation DB (v3.2 → v3.5)
-| # | Item | Effort | Priority |
-|---|------|--------|----------|
-| F1.1 | Buat table `wa_logs` di Supabase | 10 min | P0 |
-| F1.2 | Buat table `ai_tasks` di Supabase | 10 min | P0 |
-| F1.3 | Buat table `ai_insights` di Supabase | 10 min | P0 |
-| F1.4 | Buat table `order_items` di Supabase | 10 min | P1 |
-| F1.5 | Test Fonnte send route (after token) | 30 min | P0 |
-| F1.6 | Test ScraperAPI gather route | 30 min | P1 |
-
-### FASE 2 — v4.0 Database (New Tables)
-| # | Item | Effort | Priority |
-|---|------|--------|----------|
-| F2.1 | Enable pgvector di Supabase | 5 min | P0 |
-| F2.2 | Buat table `embeddings` | 10 min | P0 |
-| F2.3 | Buat table `agent_memory` | 10 min | P0 |
-| F2.4 | Buat table `agent_handoffs` | 10 min | P1 |
-| F2.5 | Buat table `pricing_history` | 10 min | P1 |
-| F2.6 | Buat table `competitor_intel` | 10 min | P1 |
-
-### FASE 3 — LangGraph.js v2 Upgrade
-| # | Item | Effort | Priority |
-|---|------|--------|----------|
-| F3.1 | Install @langchain/community (SupabaseVectorStore) | 15 min | P0 |
-| F3.2 | Upgrade MessageComposer → v2 (RAG memory) | 1-2 hr | P0 |
-| F3.3 | Buat PricingOptimizer agent baru | 1 hr | P1 |
-| F3.4 | Buat ContentScheduler agent baru | 1 hr | P1 |
-| F3.5 | Tambah 2 LangGraph agents: total 6 | 2 hr | P1 |
-
-### FASE 4 — CrewAI v4.0 Upgrade
-| # | Item | Effort | Priority |
-|---|------|--------|----------|
-| F4.1 | Tambah churn_detector agent ke agents.yaml | 30 min | P0 |
-| F4.2 | Tambah upsell_advisor agent ke agents.yaml | 30 min | P0 |
-| F4.3 | Tambah engagement_analyzer agent | 30 min | P1 |
-| F4.4 | Buat rag_memory_tool.py | 1 hr | P0 |
-| F4.5 | Update crew.py dengan crews baru | 1 hr | P0 |
-| F4.6 | Buat ingestion pipeline LangChain Python | 2 hr | P1 |
-| F4.7 | Push repo CrewAI ke GitHub + AMP deploy | 30 min | P1 |
-
-### FASE 5 — API Routes v4.0 Baru
-| # | Item | Effort | Priority |
-|---|------|--------|----------|
-| F5.1 | POST /api/ai/rag/query | 1 hr | P0 |
-| F5.2 | PUT /api/ai/memory/sync | 1 hr | P0 |
-| F5.3 | POST /api/agent/handoff | 1 hr | P1 |
-| F5.4 | GET /api/pricing/suggest/:productId | 1 hr | P1 |
-| F5.5 | POST /api/content/schedule | 1 hr | P1 |
-| F5.6 | GET/POST /api/competitor/intel | 1 hr | P1 |
-
-### FASE 6 — UI/UX Upgrade
-| # | Item | Effort | Priority |
-|---|------|--------|----------|
-| F6.1 | AI Intelligence Page (/app/ai) | 2-3 hr | P1 |
-| F6.2 | Human-in-loop review panel | 2 hr | P1 |
-| F6.3 | Pricing optimizer UI | 1-2 hr | P2 |
-| F6.4 | Content Calendar page | 2-3 hr | P2 |
-| F6.5 | Mobile responsiveness audit | 1 hr | P1 |
+### Technical Gaps (Session-Specific)
+4. **wa_logs table** — WhatsApp history logging (S001)
+5. **ai_tasks table** — Task queue UI (S001)
+6. **ai_insights table** — AI insights storage (S001)
+7. **LangGraph v2 agents** — MessageComposerV2 + PricingOptimizer (S003)
+8. **4 new CrewAI agents** — Churn, Upsell, Engagement, Competitor (S004)
+9. **AI Intelligence page** — `/ai` dashboard (S005)
+10. **Auto-sequence system** — Day 0/3/7/14 (S006)
+11. **Enhanced dashboard metrics** — Revenue growth, CLV, AOV (S007)
+12. **Security hardening** — Device lock, rate limiting (S008)
 
 ---
 
-## 🔑 GIT REPOSITORIES
+## 📈 TOKEN/CREDIT CONSUMPTION ESTIMATES
 
-| Repo | URL | Branch | Status |
-|------|-----|--------|--------|
-| Main Sovereign | https://github.com/ganihypha/Sovereign.private.real.busines.orchest | main | ✅ SYNCED (v3.2) |
-| CrewAI Sovereign | https://github.com/ganihypha/Crew.ai.sovereign.orchest | main | ✅ EXISTS (needs v4.0 push) |
+### Per Session (Genspark AI)
+| Session | Focus | Est. Credits | Notes |
+|---------|-------|-------------|-------|
+| S001 | Foundation DB + Fonnte | 80–95 | DB schema + API routes |
+| S002 | pgvector + tables | 85–100 | pgvector SQL + RLS |
+| S003 | LangGraph v2 + RAG | 95–109 | Complex TypeScript agents |
+| S004 | CrewAI v4 (4 agents) | 95–109 | Python + YAML |
+| S005 | AI Intelligence UI | 90–109 | Complex HTML/JS page |
+| S006 | Fonnte live + sequences | 80–95 | API integration |
+| S007 | Dashboard upgrade | 75–90 | JS + API enhancement |
+| S008 | Polish + security | 80–100 | Cross-cutting concerns |
+| **TOTAL** | **All 8 sessions** | **680–807** | |
 
-**GitHub Token**: `<GITHUB_PAT_TOKEN>`
+### Per Session (Claude Sonnet — claude.ai)
+- Input: ~100K tokens per session
+- Cost: ~$0.5–$1.5 per session (at $3/1M input, $15/1M output)
+- Total: ~$4–12 for full 8-session roadmap
+
+### Runtime AI Costs (Per Month — Production)
+| Service | Usage Est. | Monthly Cost Est. |
+|---------|-----------|-----------------|
+| OpenAI (embeddings) | 50K tokens/day | ~$1–3/month |
+| OpenAI (GPT-4o-mini) | 100K tokens/day | ~$5–10/month |
+| Groq (fallback) | Free tier | $0 |
+| ScraperAPI | 5K pages/month | ~$29/month |
+| CrewAI AMP | Starter plan | ~$20–50/month |
+| **Total AI costs** | | **~$55–92/month** |
 
 ---
 
-## ⚠️ SECURITY NOTES
+## ⚡ QUICK START NEXT SESSION
 
-1. **Fonnte Token**: BELUM DIKONFIGURASI — daftar di fonnte.com
-2. **LangChain Keys di Git**: Sebelumnya terekspos di commit docs/ → sudah di-clean (amend + force push). **Disarankan ROTATE keys ini**:
-   - LangChain PAT (lsv2_pt_da3bf55d...)
-   - LangChain Service Key (lsv2_sk_3f0ef8c1...)
-   - CrewAI PAT (pat_CYsjTjGRvR37C0j...)
-   - CrewAI Enterprise Token (PK_682a18e31a162a...)
-   - SerpAPI Key (7fabcda253...)
-3. **.dev.vars** sudah ada di .gitignore — aman
-4. **Device ID Locking**: Belum diimplementasi (PLANNED)
+```bash
+# 1. Clone
+git clone "https://<GITHUB_PAT>@github.com/ganihypha/Sovereign.private.real.busines.orchest.git" webapp
+cd webapp && npm install
+
+# 2. Configure
+export CLOUDFLARE_API_TOKEN="<CF_TOKEN>"
+export CLOUDFLARE_ACCOUNT_ID="618d52f63c689422eacf6638436c3e8b"
+# Create .dev.vars with all credentials
+
+# 3. Start
+npm run build
+fuser -k 3000/tcp 2>/dev/null || true
+pm2 start ecosystem.config.cjs
+
+# 4. Verify
+curl http://localhost:3000/api/health
+# Expected: {"status":"ok","version":"3.2","crewai":{"amp_online":true}}
+```
 
 ---
 
-*Document generated 2026-04-01 | Sovereign Business Engine | CONFIDENTIAL*
+## 🗓️ EXECUTION CALENDAR
+
+```
+Week 1 (Sessions 1-2): Foundation + pgvector
+  → 4 new Supabase tables + Fonnte API routes + pgvector
+
+Week 2 (Sessions 3-4): AI Core
+  → LangGraph v2 with RAG + CrewAI 4 new agents
+
+Week 3 (Sessions 5-6): Interface + Automation
+  → AI Intelligence page + Fonnte live + sequences
+
+Week 4 (Sessions 7-8): Analytics + Launch
+  → Real-money dashboard + security hardening + v6.0 deploy
+```
+
+---
+
+*Current State Document | Updated 2026-04-02 | Sovereign Business Engine v3.2 → v6.0 | CONFIDENTIAL*
